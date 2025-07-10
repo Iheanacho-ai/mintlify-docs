@@ -1,0 +1,122 @@
+---
+title: Create a Cluster
+description: A guide on how to create a cluster.
+---
+
+# Create a Cluster
+
+This guide shows you how to create a cluster from registered machines.
+
+First, click the "Clusters" section button in the sidebar. Next, click the "Create Cluster" button.
+
+You may name the cluster, as well specify the version of Talos Linux and Kubernetes that the cluster should be created with. You may also enable optional cluster features, such as Disk Encryption or [Workload Service Proxying]().
+
+> Note that disk encryption can only be enabled during cluster creation. Enabling this checkbox will configure the cluster to use Omni as a [Key Management Server](), and local disk access will not the possible unless the machine is connected to Omni.
+
+Create a file called `cluster.yaml` with the following content:
+
+```yaml
+kind: Cluster
+name: example
+kubernetes:
+  version: v1.27.0
+talos:
+  version: v1.5.2
+---
+kind: ControlPlane
+machines:
+  - <control plane machine UUID>
+---
+kind: Workers
+machines:
+  - <worker machine UUID>
+---
+kind: Machine
+name: <control plane machine UUID>
+install:
+  disk: /dev/<disk>
+---
+kind: Machine
+name: <worker machine UUID>
+install:
+  disk: /dev/<disk>
+```
+
+> If enabling optional features such as disk encryption, add them to the Cluster document e.g.:
+
+```yaml
+kind: Cluster
+name: example
+kubernetes:
+  version: v1.27.0
+talos:
+  version: v1.5.2
+features:
+  diskEncryption: true
+```
+
+Now, validate the document:
+
+```bash
+omnictl cluster template validate -f cluster.yaml
+```
+
+Create the cluster:
+
+```bash
+omnictl cluster template sync -f cluster.yaml --verbose
+```
+
+Finally, wait for the cluster to be up:
+
+```bash
+omnictl cluster template status -f cluster.yaml
+```
+
+
+Create a file called `cluster.yaml` with the following content:
+
+```yaml
+kind: Cluster
+name: example
+kubernetes:
+  version: v1.28.0
+talos:
+  version: v1.5.4
+---
+kind: ControlPlane
+machineClass:
+  name: control-planes
+  size: 1
+---
+kind: Workers
+machineClass:
+  name: workers
+  size: 1
+---
+kind: Workers
+name: secondary
+machineClass:
+  name: secondary-workers
+  size: unlimited
+```
+
+Be sure to create machine classes `control-planes`, `workers` and `secondary-workers` beforehand. See [machine classes how-to]().
+
+Now, validate the document:
+
+```bash
+omnictl cluster template validate -f cluster.yaml
+```
+
+Create the cluster:
+
+```bash
+omnictl cluster template sync -f cluster.yaml --verbose
+```
+
+Finally, wait for the cluster to be up:
+
+```bash
+omnictl cluster template status -f cluster.yaml
+```
