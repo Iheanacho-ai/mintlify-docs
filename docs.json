@@ -58,7 +58,15 @@
                   "talos/v1.0/platform-specific-install/air-gapped",
                   "talos/v1.0/platform-specific-install/boot-assets"
                 ]
+              },
+              {
+                "group": "Reference",
+                "pages": [
+                  "talos/v1.0/reference/config"
+                ]
               }
+
+
             ]
           },
           {
@@ -94,7 +102,13 @@
                   "talos/v2.0/platform-specific-install/air-gapped",
                   "talos/v2.0/platform-specific-install/boot-assets"
                 ]
-              }   
+              },
+              {
+                "group": "Reference",
+                "pages": [
+                  "talos/v1.0/reference/config"
+                ]
+              }  
             ]
           }
         ]
@@ -112,15 +126,15 @@
           {
             "group": "Installation and Setup",
             "pages": [
-              "omni/Installation-and-setup/how-to-install-talosctl",
-              "omni/Installation-and-setup/install-and-configure-omnictl"
+              "omni/installation-and-setup/how-to-install-talosctl",
+              "omni/installation-and-setup/install-and-configure-omnictl"
             ]
           },
           {
             "group": "Cluster Management",
             "pages": [
-              "omni/cluster-management/how-to-create-a-cluster/index",
-              "omni/cluster-management/how-to-create-a-hybrid-cluster/index"
+              "omni/cluster-management/how-to-create-a-cluster",
+              "omni/cluster-management/how-to-create-a-hybrid-cluster"
             ]
           },
           {
